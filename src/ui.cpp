@@ -6,17 +6,22 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "recordbook.hpp"
+#include "record.hpp"
 
 using namespace std;
 
-vector<Patient> office;
+vector<Book> record;
+Record record;
 Patient patient;
 Date entryDate;
 Date depurateDate;
 
+int cont;
 int op = 0;
 int dato;
 string cadena;
+float dato2;
 
 void UI::menu()
 {
@@ -25,7 +30,7 @@ void UI::menu()
     do
     {
 
-        cout << "1) agregar \n";
+        cout << "1) Agrager Nuevo Registro \n";
         cout << "2) mostrar \n";
         cout << "3) Salior \n";
         cin >> op;
@@ -36,6 +41,7 @@ void UI::menu()
         case 1:
 
             add();
+
             break;
 
         case 2:
@@ -54,19 +60,30 @@ void UI::add()
 
     do
     {
+        cout << "===== Registros =====\n";
 
-        cout << "Ingresa el nss: ";
+
+        cout << "Nss: ";
         getline(cin >> ws, cadena);
         patient.setNss(cadena);
 
-        cout << "Ingresa tu Nombre: ";
+        cout << "Nombre: ";
         getline(cin >> ws, cadena);
         patient.setName(cadena);
 
-        cout << "Ingresa tu tipo de sangre: ";
+        cout << "Tipo de sangre: ";
         getline(cin >> ws, cadena);
-        cout << "[" << cadena << "]";
         patient.setBloodType(cadena);
+
+        cout << "Gastos: ";
+        cin >> dato2;
+        cin.ignore();
+        record.setBills(dato2);
+
+        cout << "Factura: ";
+        cin >> dato2;
+        cin.ignore();
+        record.setTotalBill(dato2);
 
         cout << "==== Fecha de entrada ==== \n";
 
@@ -85,7 +102,10 @@ void UI::add()
         cin.ignore();
         entryDate.setAnio(dato);
 
-        patient.setEntryDate(entryDate);
+        record.setEntryDate(entryDate);
+
+
+      
 
         cout << "==== Fecha de Salida ==== \n";
 
@@ -104,9 +124,11 @@ void UI::add()
         cin.ignore();
         depurateDate.setAnio(dato);
 
-        patient.setDepurateDate(depurateDate);
+        record.setDepurateDate(depurateDate);
 
-        office.push_back(patient);
+        record.setCode(cont + 1);
+
+        Book.push_back(record);
 
         saveFile();
 
@@ -123,6 +145,9 @@ void UI::add()
 
     } while (op == 'S');
 }
+
+/*
+
 
 void UI::show()
 {
@@ -171,3 +196,4 @@ void UI::readFile()
         cout << "no se pudo abrir el archivo \n";
     }
 }
+*/

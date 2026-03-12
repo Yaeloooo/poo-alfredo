@@ -5,11 +5,15 @@
 #include <string>
 #include "patient.hpp"
 #include "date.hpp"
+#include "recordbook.hpp"
+#include "record.hpp"
 
 class UI
 {
 private:
-    std::vector<Patient> office;
+
+    std::vector<Book> record;
+    Record record;
     Patient patient;
     Date entryDate;
     Date depurateDate;

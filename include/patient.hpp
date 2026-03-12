@@ -11,8 +11,6 @@ private:
     std::string nss;
     std::string name;
     std::string bloodType;
-    Date entryDate;
-    Date depurateDate;
 
 public:
     Patient();
@@ -22,16 +20,14 @@ public:
     void setNss(const std::string &);
     void setName(const std::string &);
     void setBloodType(const std::string &);
-    void setEntryDate(const Date &);
-    void setDepurateDate(const Date &);
+
 
     std::string toString() const;
 
     std::string getNss() const;
     std::string getName() const;
     std::string getBloodType() const;
-    Date getEntryDate() const;
-    Date getDepurateDate() const;
+
 
     friend std::ostream &operator<<(std::ostream &, const Patient &);
     friend std::istream &operator>>(std::istream &, Patient &);
