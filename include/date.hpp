@@ -14,8 +14,8 @@ private:
 public:
     Date();
     Date(int dia, int mes, int anio);
-    Date(const Date &otra);
-    Date &operator=(const Date &otra);
+    Date(const Date &other);
+    Date &operator=(const Date &other);
 
     void setDia(const int &);
     void setMes(const int &);

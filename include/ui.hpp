@@ -12,21 +12,31 @@ class UI
 {
 private:
 
-    std::vector<Book> record;
-    Record record;
-    Patient patient;
-    Date entryDate;
-    Date depurateDate;
-    int op;
-    int dato;
-    std::string cadena;
+    
+    Book* bookRef;
+
+    void mainUI();
+
+    void addRecord();
+
+    void delRecord();
+
+    void findRecord();
+
+    void sortRecord();
+
+    void delAll();
+
+    void showRecord();
+
+    void writeToFile();
+
+    void readFromFile();
+
+    void enterToContinue();
 
 public:
-    void menu();
-    void add();
-    void show();
-    void saveFile();
-    void readFile();
+     UI(Book&);
 };
 
 #endif // __UI_H__

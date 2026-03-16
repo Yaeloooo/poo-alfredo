@@ -7,16 +7,16 @@ Patient::Patient()
 {
 }
 
-Patient::Patient(const Patient &otra) : nss(otra.nss), name(otra.name), bloodType(otra.bloodType){
+Patient::Patient(const Patient &other) : nss(other.nss), name(other.name), bloodType(other.bloodType){
 }
 
-Patient &Patient::operator=(const Patient &otra)
+Patient &Patient::operator=(const Patient &other)
 {
-    if (this != &otra)
+    if (this != &other)
     {
-        this->nss = otra.nss;
-        this->name = otra.name;
-        this->bloodType = otra.bloodType;
+        this->nss = other.nss;
+        this->name = other.name;
+        this->bloodType = other.bloodType;
 
     }
     return *this;
@@ -42,7 +42,7 @@ void Patient::setBloodType(const std::string &v)
 
 std::string Patient::toString() const
 {
-    return "Nss: " + nss + "\n" + "Name: " + name + "\n" + "Tipo de sangre: " + bloodType + "\n";
+    return "\nNss: " + nss + "\n" + "Name: " + name + "\n" + "Tipo de sangre: " + bloodType + "\n";
 }
 
 std::string Patient::getNss() const
@@ -71,7 +71,7 @@ ostream &operator<<(ostream &os, const Patient &n)
 
 istream &operator>>(istream &is, Patient &n)
 {
-    char sep;
+   
 
     getline(is, n.nss, '*');
 

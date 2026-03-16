@@ -4,7 +4,8 @@
 #include "patient.hpp"
 
 int main(){
-    UI ui;
-    ui.readFile();
-    ui.menu();
+    
+    Book book;
+    UI myUi(book);
+  
 }

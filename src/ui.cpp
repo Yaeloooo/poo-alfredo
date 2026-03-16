@@ -11,52 +11,107 @@
 
 using namespace std;
 
-vector<Book> record;
-Record record;
-Patient patient;
-Date entryDate;
-Date depurateDate;
 
-int cont;
 int op = 0;
 int dato;
 string cadena;
 float dato2;
 
-void UI::menu()
+UI::UI(Book& b) : bookRef(&b) {
+    this->mainUI();
+}
+
+
+void UI::mainUI()
 {
-    readFile();
+   
+
+  char op;
 
     do
     {
 
-        cout << "1) Agrager Nuevo Registro \n";
-        cout << "2) mostrar \n";
-        cout << "3) Salior \n";
+        system("cls");
+
+        cout << "Menu de Registros" << endl
+             << endl;
+
+        cout << "[A]nadir" << endl;
+        cout << "[E]liminar" << endl;
+        cout << "[B]uscar" << endl;
+        cout << "[O]rdenar" << endl;
+        cout << "[L]impiar" << endl;
+        cout << "[M]ostrar" << endl;
+        cout << "e[S]cribir al disco" << endl;
+        cout << "Lee[R] del disco" << endl;
+        cout << "Sal[I]r" << endl;
+
         cin >> op;
+
+        op = toupper(op);
         cin.ignore();
 
         switch (op)
         {
-        case 1:
-
-            add();
-
+        case 'A':
+            this->addRecord();
             break;
 
-        case 2:
+        case 'E':
+            this->delRecord();
+            /* code */
+            break;
+        case 'B':
+            this->findRecord();
+            /* code */
+            break;
+        case 'O':
 
-            show();
+            this->sortRecord();
+            /* code */
+            break;
+        case 'L':
+            this->delAll();
+            /* code */
+            break;
+        case 'M':
+            this->showRecord();
+            /* code */
+            break;
+        case 'S':
+
+            this->writeToFile();
+            /* code */
+            break;
+        case 'R':
+            this->readFromFile();
+            /* code */
+            break;
+        case 'I':
+            cout << "saleindo...";
+            this->enterToContinue();
+            /* code */
+            break;
+
+        default:
             break;
         }
 
-    } while (op != 3);
+        /* code */
+    } while (op != 'I');
 }
 
-void UI::add()
+void UI::addRecord()
 {
+    int cont = 0;
+    Record record;
+    Patient patient;
+    Date entryDate;
+    Date depurateDate;
 
     char op;
+
+    record.setCode(cont + 1);
 
     do
     {
@@ -126,11 +181,12 @@ void UI::add()
 
         record.setDepurateDate(depurateDate);
 
-        record.setCode(cont + 1);
+        record.setPatient(patient);
+        
+        bookRef->add(record);
 
-        Book.push_back(record);
+        
 
-        saveFile();
 
         do
         {
@@ -144,56 +200,143 @@ void UI::add()
         } while (op != 'S' && op != 'N');
 
     } while (op == 'S');
+
+    
+    
 }
 
-/*
+void UI::delRecord(){
+    
+    Record record;
+    int data;
+    system("cls");
+
+    cout << "Elinando un registro" << endl;
+
+    cout << "Codigo: ";
+    cin >> data;
+    cin.ignore();
+    record.setCode(data);
+
+    bookRef->del(record);
+
+    cout << "Si el registro existe ya fue eliminado" << endl;
+
+}
+
+void UI::findRecord(){
+
+    Record record;
+    int myStr;
+    system("cls");
+
+    cout << "Buscando un registro" << endl;
+
+    cout << "Codigo: ";
+    cin >> myStr;
+    cin.ignore();
+    record.setCode(myStr);
+
+    if(this->bookRef->isThere(record)){
+
+        cout << record.toString();
+
+    }else{
+        cout << "El registro no fue encontrado" << myStr << endl;
+    }
 
 
-void UI::show()
+
+    this->enterToContinue();
+    
+}
+
+void UI::sortRecord(){
+
+     system("cls");
+
+    cout << "Ordenando... << endl" << endl;
+    this->bookRef->sort();
+    cout << endl << endl;
+
+    cout << "El registro se ha ordenado" << endl;
+    this->enterToContinue();
+    
+}
+
+void UI::delAll(){
+
+    system("cls");
+    cout << "Limpiar todo el registro" << endl << endl;
+
+    bookRef->clear();
+
+    this->enterToContinue();
+    
+}
+
+void UI::showRecord(){
+
+    system("cls");
+    cout << "Mostrando registro" << endl;
+
+    cout << bookRef->toString();
+
+    this->enterToContinue();
+    
+}
+
+void UI::writeToFile(){
+
+    string myStr;
+    system("cls");
+    cout << "Escribiendo al disco" << endl;
+
+    cout << "Nombre del archivo: ";
+    getline(cin >> ws, myStr);
+
+    ofstream myFile(myStr,ios_base::trunc);
+
+    if(myFile.is_open()){
+        myFile << *bookRef;
+        myFile.close();
+        cout << "Gruopo escrito" << endl;
+    }else{
+        cout << "error" << endl;
+    }
+    
+}
+
+void UI::readFromFile(){
+
+        string myStr;
+    system("cls");
+
+    cout << "leyendo del disco..." << endl << endl;
+    cout << "Nombre del archivo: " << endl;
+    getline(cin >> ws,myStr);
+
+    ifstream myFile(myStr);
+
+    if (myFile.is_open()){
+
+        myFile >> *this->bookRef;
+
+        myFile.close();
+
+         cout << "Grupo leido correctamente";
+       
+    }else{
+        cout << "nose pudo leer el arhiov";
+    }
+    
+    cout << endl << endl;
+    
+}
+
+void UI::enterToContinue()
 {
-
-    for (const Patient &p : office)
-    {
-        cout << p << endl;
-    }
+       cout << "[Enter] para continuar...";
+    cin.get();
 }
 
-void UI::saveFile()
-{
-
-    ofstream file("paciente.file", ios::app);
-
-    if (file.is_open())
-    {
-
-        for (Patient p : office)
-        {
-
-            file << p << '#';
-        }
-    }
-}
-
-
-void UI::readFile()
-{
-
-    char sep;
-
-    ifstream file("paciente.file");
-
-    if (file.is_open())
-    {
-
-        while (file >> patient >> sep)
-        {
-
-            office.push_back(patient);
-        }
-    }
-    else
-    {
-        cout << "no se pudo abrir el archivo \n";
-    }
-}
-*/

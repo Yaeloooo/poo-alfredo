@@ -16,8 +16,8 @@ private:
 
 public:
     Record();
-    Record(const Record&otra);
-    Record &operator=(const Record &otra);
+    Record(const Record&other);
+    Record &operator=(const Record &other);
 
     void setCode(const int&);
     void setPatient(const Patient&);
@@ -36,10 +36,13 @@ public:
 
     std::string toString() const;
 
+    bool operator==(const Record&) const;
+    bool operator<(const Record&) const;
+
+    
+    friend std::ostream &operator<<(std::ostream&, const Record);
+    friend std::istream &operator>>(std::istream&, Record&);
+
 };
-
-
-
-
 
 #endif // __RECORD_H__

@@ -9,18 +9,18 @@ Date::Date(int d, int m, int a) : dia(d), mes(m), anio(a)
 {
 }
 
-Date::Date(const Date &otra) : dia(otra.dia), mes(otra.mes), anio(otra.anio)
+Date::Date(const Date &other) : dia(other.dia), mes(other.mes), anio(other.anio)
 {
 }
 
-Date &Date::operator=(const Date &otra)
+Date &Date::operator=(const Date &other)
 {
 
-    if (this != &otra)
+    if (this != &other)
     {
-        this->dia = otra.dia;
-        this->mes = otra.mes;
-        this->anio = otra.anio;
+        this->dia = other.dia;
+        this->mes = other.mes;
+        this->anio = other.anio;
     }
 
     return *this;

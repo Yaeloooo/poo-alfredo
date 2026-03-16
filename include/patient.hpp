@@ -14,8 +14,8 @@ private:
 
 public:
     Patient();
-    Patient(const Patient &otra);
-    Patient &operator=(const Patient &otra);
+    Patient(const Patient &other);
+    Patient &operator=(const Patient &other);
 
     void setNss(const std::string &);
     void setName(const std::string &);
