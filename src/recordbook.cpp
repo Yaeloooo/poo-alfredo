@@ -52,6 +52,20 @@ void Book::sort()
     std::sort(this->record.begin(), this->record.end());
 }
 
+Record Book::find(const int&code)
+{
+    
+
+    for (Record r : this->record)
+    {
+        if(r.getCode() == code){
+            return r;
+        }
+    }
+return Record();
+
+}
+
 bool Book::isThere(const Record &r) const
 {
 

@@ -11,22 +11,20 @@
 
 using namespace std;
 
-
 int op = 0;
 int dato;
 string cadena;
 float dato2;
 
-UI::UI(Book& b) : bookRef(&b) {
+UI::UI(Book &b) : bookRef(&b)
+{
     this->mainUI();
 }
 
-
 void UI::mainUI()
 {
-   
 
-  char op;
+    char op;
 
     do
     {
@@ -117,7 +115,6 @@ void UI::addRecord()
     {
         cout << "===== Registros =====\n";
 
-
         cout << "Nss: ";
         getline(cin >> ws, cadena);
         patient.setNss(cadena);
@@ -159,9 +156,6 @@ void UI::addRecord()
 
         record.setEntryDate(entryDate);
 
-
-      
-
         cout << "==== Fecha de Salida ==== \n";
 
         cout << "Dia: ";
@@ -182,11 +176,8 @@ void UI::addRecord()
         record.setDepurateDate(depurateDate);
 
         record.setPatient(patient);
-        
+
         bookRef->add(record);
-
-        
-
 
         do
         {
@@ -200,13 +191,11 @@ void UI::addRecord()
         } while (op != 'S' && op != 'N');
 
     } while (op == 'S');
-
-    
-    
 }
 
-void UI::delRecord(){
-    
+void UI::delRecord()
+{
+
     Record record;
     int data;
     system("cls");
@@ -221,10 +210,10 @@ void UI::delRecord(){
     bookRef->del(record);
 
     cout << "Si el registro existe ya fue eliminado" << endl;
-
 }
 
-void UI::findRecord(){
+void UI::findRecord()
+{
 
     Record record;
     int myStr;
@@ -237,45 +226,52 @@ void UI::findRecord(){
     cin.ignore();
     record.setCode(myStr);
 
-    if(this->bookRef->isThere(record)){
+    if (this->bookRef->isThere(record))
+    {
 
-        cout << record.toString();
-
-    }else{
-        cout << "El registro no fue encontrado" << myStr << endl;
+        if (this->bookRef->isThere(record))
+        {
+            Record found = bookRef->find(myStr);
+            cout << found.toString();
+        }
+        else
+        {
+            cout << "El registro no fue encontrado" << endl;
+        }
     }
-
-
+  
 
     this->enterToContinue();
-    
 }
 
-void UI::sortRecord(){
+void UI::sortRecord()
+{
 
-     system("cls");
+    system("cls");
 
     cout << "Ordenando... << endl" << endl;
     this->bookRef->sort();
-    cout << endl << endl;
+    cout << endl
+         << endl;
 
     cout << "El registro se ha ordenado" << endl;
     this->enterToContinue();
-    
 }
 
-void UI::delAll(){
+void UI::delAll()
+{
 
     system("cls");
-    cout << "Limpiar todo el registro" << endl << endl;
+    cout << "Limpiar todo el registro" << endl
+         << endl;
 
     bookRef->clear();
 
     this->enterToContinue();
-    
 }
 
-void UI::showRecord(){
+void UI::showRecord()
+{
 
     system("cls");
     cout << "Mostrando registro" << endl;
@@ -283,10 +279,10 @@ void UI::showRecord(){
     cout << bookRef->toString();
 
     this->enterToContinue();
-    
 }
 
-void UI::writeToFile(){
+void UI::writeToFile()
+{
 
     string myStr;
     system("cls");
@@ -295,48 +291,53 @@ void UI::writeToFile(){
     cout << "Nombre del archivo: ";
     getline(cin >> ws, myStr);
 
-    ofstream myFile(myStr,ios_base::trunc);
+    ofstream myFile(myStr, ios_base::trunc);
 
-    if(myFile.is_open()){
+    if (myFile.is_open())
+    {
         myFile << *bookRef;
         myFile.close();
         cout << "Gruopo escrito" << endl;
-    }else{
+    }
+    else
+    {
         cout << "error" << endl;
     }
-    
 }
 
-void UI::readFromFile(){
+void UI::readFromFile()
+{
 
-        string myStr;
+    string myStr;
     system("cls");
 
-    cout << "leyendo del disco..." << endl << endl;
+    cout << "leyendo del disco..." << endl
+         << endl;
     cout << "Nombre del archivo: " << endl;
-    getline(cin >> ws,myStr);
+    getline(cin >> ws, myStr);
 
     ifstream myFile(myStr);
 
-    if (myFile.is_open()){
+    if (myFile.is_open())
+    {
 
         myFile >> *this->bookRef;
 
         myFile.close();
 
-         cout << "Grupo leido correctamente";
-       
-    }else{
+        cout << "Grupo leido correctamente";
+    }
+    else
+    {
         cout << "nose pudo leer el arhiov";
     }
-    
-    cout << endl << endl;
-    
+
+    cout << endl
+         << endl;
 }
 
 void UI::enterToContinue()
 {
-       cout << "[Enter] para continuar...";
+    cout << "[Enter] para continuar...";
     cin.get();
 }
-

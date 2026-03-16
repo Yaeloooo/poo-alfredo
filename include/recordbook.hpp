@@ -30,6 +30,8 @@ public:
     
     void sort();
 
+    Record find(const int&);
+
    
     bool isThere(const Record&) const;
 
