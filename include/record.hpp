@@ -1,6 +1,8 @@
 #ifndef __RECORD_H__
 #define __RECORD_H__
 #include "patient.hpp"
+#include "patient.hpp"
+#include "date.hpp"
 
 class Record
 {

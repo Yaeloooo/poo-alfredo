@@ -69,12 +69,13 @@ std::ostream &operator<<(std::ostream &os, const Date &n)
     return os;
 }
 
-std::istream &operator>>(std::istream &is, Date &n)
-{
-
-    char sep;
-
-    is >> n.dia >> sep >> n.mes >> sep >> n.anio;
-
+std::istream& operator>>(std::istream& is, Date& d) {
+    std::string tmp;
+    getline(is, tmp, '*');
+    d.dia = stoi(tmp);
+    getline(is, tmp, '*');
+    d.mes = stoi(tmp);
+    getline(is, tmp, '*');
+    d.anio = stoi(tmp);
     return is;
 }

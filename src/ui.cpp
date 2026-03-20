@@ -6,17 +6,14 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "recordbook.hpp"
+#include "container.hpp"
 #include "record.hpp"
 
 using namespace std;
 
-int op = 0;
-int dato;
-string cadena;
-float dato2;
 
-UI::UI(Book &b) : bookRef(&b)
+
+UI::UI(Container<Record> &b) : containerRef(&b)
 {
     this->mainUI();
 }
@@ -107,7 +104,12 @@ void UI::addRecord()
     Date entryDate;
     Date depurateDate;
 
-    char op;
+    int op = 0;
+int dato;
+string cadena;
+float dato2;
+
+    char opp;
 
     record.setCode(cont + 1);
 
@@ -177,18 +179,18 @@ void UI::addRecord()
 
         record.setPatient(patient);
 
-        bookRef->add(record);
+        containerRef->add(record);
 
         do
         {
 
             cout << "Deseas agregar otro?";
-            cin >> op;
+            cin >> opp;
             cin.ignore();
 
-            op = toupper(op);
+            opp = toupper(opp);
             /* code */
-        } while (op != 'S' && op != 'N');
+        } while (opp != 'S' && opp != 'N');
 
     } while (op == 'S');
 }
@@ -207,7 +209,7 @@ void UI::delRecord()
     cin.ignore();
     record.setCode(data);
 
-    bookRef->del(record);
+    containerRef->del(record);
 
     cout << "Si el registro existe ya fue eliminado" << endl;
 }
@@ -226,12 +228,12 @@ void UI::findRecord()
     cin.ignore();
     record.setCode(myStr);
 
-    if (this->bookRef->isThere(record))
+    if (this->containerRef->isThere(record))
     {
 
-        if (this->bookRef->isThere(record))
+        if (this->containerRef->isThere(record))
         {
-            Record found = bookRef->find(myStr);
+            Record found = containerRef->find(myStr);
             cout << found.toString();
         }
         else
@@ -250,7 +252,7 @@ void UI::sortRecord()
     system("cls");
 
     cout << "Ordenando... << endl" << endl;
-    this->bookRef->sort();
+    this->containerRef->sort();
     cout << endl
          << endl;
 
@@ -265,7 +267,7 @@ void UI::delAll()
     cout << "Limpiar todo el registro" << endl
          << endl;
 
-    bookRef->clear();
+    containerRef->clear();
 
     this->enterToContinue();
 }
@@ -276,7 +278,7 @@ void UI::showRecord()
     system("cls");
     cout << "Mostrando registro" << endl;
 
-    cout << bookRef->toString();
+    cout << containerRef->toString();
 
     this->enterToContinue();
 }
@@ -295,7 +297,7 @@ void UI::writeToFile()
 
     if (myFile.is_open())
     {
-        myFile << *bookRef;
+        myFile << *containerRef;
         myFile.close();
         cout << "Gruopo escrito" << endl;
     }
@@ -321,7 +323,7 @@ void UI::readFromFile()
     if (myFile.is_open())
     {
 
-        myFile >> *this->bookRef;
+        myFile >> *this->containerRef;
 
         myFile.close();
 

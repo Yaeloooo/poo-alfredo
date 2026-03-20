@@ -3,9 +3,13 @@
 #include "date.hpp"
 #include "patient.hpp"
 
-int main(){
-    
-    Book book;
-    UI myUi(book);
-  
+
+#include "container.hpp"
+#include "ui.hpp"
+#include "record.hpp"
+
+int main() {
+    Container<Record> myContainer;
+    UI myUI(myContainer);
+    return 0;
 }

@@ -5,15 +5,16 @@
 #include <string>
 #include "patient.hpp"
 #include "date.hpp"
-#include "recordbook.hpp"
+#include "container.hpp"
 #include "record.hpp"
+
 
 class UI
 {
 private:
 
     
-    Book* bookRef;
+    Container<Record>* containerRef;
 
     void mainUI();
 
@@ -36,7 +37,7 @@ private:
     void enterToContinue();
 
 public:
-     UI(Book&);
+     UI(Container<Record>&);
 };
 
 #endif // __UI_H__

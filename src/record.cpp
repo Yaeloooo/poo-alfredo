@@ -109,11 +109,25 @@ bool Record::operator<(const Record&other) const
 
 
 
-std::istream& operator>>(std::istream& is, Record& r){
+std::istream& operator>>(std::istream& is, Record& r) {
+    std::string tmp;
 
-     char sep;
+    getline(is, tmp, '*');
+    if(tmp.empty()) return is;
+    r.code = stoi(tmp);
 
-        is >> r.code >> sep >> r.patient >> sep >> r.bills >> sep >> r.totalBill >> sep >> r.entryDate >> sep >> r.depurateDate;
+    is >> r.patient;        
+
+    getline(is, tmp, '*');
+    if(tmp.empty()) return is;
+    r.bills = stof(tmp);
+
+    getline(is, tmp, '*');
+    if(tmp.empty()) return is;
+    r.totalBill = stof(tmp);
+
+    is >> r.entryDate;     
+    is >> r.depurateDate;
 
     return is;
 }
