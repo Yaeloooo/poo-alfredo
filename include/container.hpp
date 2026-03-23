@@ -1,34 +1,38 @@
 #ifndef __CONTAINER_H__
 #define __CONTAINER_H__
 
-#include <algorithm>
+#include <iostream>
+#include <string>
 #include <vector>
-#include <fstream>
 #include <sstream>
-
+#include <algorithm>
+#include <fstream>
 using namespace std;
 
 template <class T>
 class Container
 {
 private:
-    std::vector<T> record;
-    std::vector<Container<T>> book;
+    vector<T> record;
 
 public:
     Container();
+
     Container(const Container<T> &);
 
-    void add(const T &);
-    void add(const Container &);
+    Container<T> &operator=(const Container<T> &);
 
-    void clear();
+    void add(const T &);
+
+    void ad(const Container<T> &);
 
     void del(const T &);
 
+    void clear();
+
     void sort();
 
-    T find(const int &);
+    T find(int &);
 
     bool isThere(const T &) const;
 
@@ -39,8 +43,6 @@ public:
     void writeToDisk(const std::string &);
 
     void readFromDisk(const std::string &);
-
-    Container<T> &operator=(const Container<T> &);
 
     Container<T> operator+(const Container<T> &);
     Container<T> operator+(const T &);
@@ -54,13 +56,21 @@ public:
     template <class X>
     friend std::ostream &operator<<(std::ostream &, const Container<X> &);
 };
-
 template <class T>
 Container<T>::Container() {}
 
 template <class T>
-Container<T>::Container(const Container<T> &otra) : record(otra.record)
+Container<T>::Container(const Container<T> &other) : record(other.record) {}
+
+template <class T>
+Container<T> &Container<T>::operator=(const Container<T> &other)
 {
+    if (this != &other)
+    {
+
+        this->record = other.record;
+    }
+    return *this;
 }
 
 template <class T>
@@ -70,10 +80,20 @@ void Container<T>::add(const T &r)
     this->record.push_back(r);
 }
 
+// template<class T>
+// void Container<T>::add(const T& b)
+// {
+//     this->book.push_back(b);
+// }
+
 template <class T>
-void Container<T>::add(const Container<T> &b)
+void Container<T>::del(const T &r)
 {
-    this->book.push_back(b);
+    if (!this->isThere(r))
+    {
+        return;
+    }
+    this->record.erase(std::find(this->record.begin(), this->record.end(), r));
 }
 
 template <class T>
@@ -83,26 +103,14 @@ void Container<T>::clear()
 }
 
 template <class T>
-void Container<T>::del(const T &r)
-{
-
-    if (!this->isThere(r))
-    {
-        return;
-    }
-    this->record.erase(std::find(this->record.begin(), this->record.end(), r));
-}
-
-template <class T>
 void Container<T>::sort()
 {
     std::sort(this->record.begin(), this->record.end());
 }
 
 template <class T>
-T Container<T>::find(const int &code)
+T Container<T>::find(int &code)
 {
-
     for (T r : this->record)
     {
         if (r.getCode() == code)
@@ -122,7 +130,6 @@ bool Container<T>::isThere(const T &r) const
 template <class T>
 std::string Container<T>::toString()
 {
-
     string result;
 
     for (T r : this->record)
@@ -142,13 +149,15 @@ int Container<T>::getCount() const
 template <class T>
 void Container<T>::writeToDisk(const std::string &)
 {
-
     string myStr;
     system("cls");
+
     cout << "Escribiendo...";
     cout << "Nobmre del archivo: ";
     getline(cin >> ws, myStr);
+
     ofstream myFile(myStr, ios_base::trunc);
+
     if (myFile.is_open())
     {
         myFile << *this;
@@ -164,59 +173,32 @@ void Container<T>::writeToDisk(const std::string &)
 template <class T>
 void Container<T>::readFromDisk(const std::string &)
 {
-
     string myStr;
     system("cls");
+
     cout << "leyendo del disco..." << endl
          << endl;
     cout << "Nombre del archivo: " << endl;
     getline(cin >> ws, myStr);
+
     ifstream myFile(myStr);
+
     if (myFile.is_open())
     {
+
         myFile >> *this;
+
         myFile.close();
+
         cout << "Grupo leido correctamente";
     }
     else
     {
         cout << "nose pudo leer el arhiov";
     }
+
     cout << endl
          << endl;
-}
-
-template <class T>
-Container<T> &Container<T>::operator=(const Container<T> &other)
-{
-
-    if (this != &other)
-    {
-
-        this->record = other.record;
-    }
-    return *this;
-}
-
-template <class T>
-Container<T> Container<T>::operator+(const Container<T> &other)
-{
-
-    Container otherContainer(*this);
-
-    otherContainer += other;
-
-    return otherContainer;
-}
-
-template <class T>
-Container<T> Container<T>::operator+(const T &other)
-{
-    Container otherContainer(*this);
-
-    otherContainer += other;
-
-    return otherContainer;
 }
 
 template <class T>
@@ -230,15 +212,37 @@ Container<T> &Container<T>::operator+=(const Container<T> &other)
 template <class T>
 Container<T> &Container<T>::operator+=(const T &other)
 {
-    this->add(other);
-    return *this;
+    Container otherBook(*this);
+
+    otherBook += other;
+
+    return otherBook;
+}
+
+template <class T>
+Container<T> Container<T>::operator+(const T &other)
+{
+    Container otherBook(*this);
+
+    otherBook += other;
+
+    return otherBook;
+}
+
+template <class T>
+Container<T> Container<T>::operator+(const Container<T> &other)
+{
+    Container otherBook(*this);
+
+    otherBook += other;
+
+    return otherBook;
 }
 
 template <class X>
-std::ostream &operator<<(std::ostream &os, const Container<X> &c)
+std::ostream &operator<<(std::ostream &os, const Container<X> &b)
 {
-
-    for (X r : c.record)
+    for (X r : b.record)
     {
 
         os << r << '#';
@@ -250,26 +254,25 @@ std::ostream &operator<<(std::ostream &os, const Container<X> &c)
 template <class X>
 std::istream &operator>>(std::istream &is, Container<X> &c)
 {
-    std::string myStr;
+
+    string myStr;
+    X myT;
 
     while (!is.eof())
     {
         getline(is, myStr, '#');
 
-        if (myStr.empty() || myStr == "\n" || myStr == "\r\n")
-            continue;
-
-        if (myStr[0] == '\n' || myStr[0] == '\r')
-            myStr = myStr.substr(1);
-
         if (!myStr.empty())
         {
-            std::stringstream mySStr(myStr);
-            X Obj;
-            mySStr >> Obj;
-            c.record.push_back(Obj);
+            stringstream mySStr(myStr);
+
+            mySStr >> myT;
+
+            c.record.push_back(myT);
         }
     }
+
     return is;
 }
-#endif // __RECORDCONTAINER_H__
+
+#endif // __CONTAINER_H__

@@ -2,17 +2,19 @@
 
 using namespace std;
 
-Record::Record(){
-    
+Record::Record()
+{
 }
 
-Record::Record(const Record &other): code(other.code),patient(other.patient), bills(other.bills), totalBill(other.totalBill), entryDate(other.entryDate), depurateDate(other.depurateDate) {
-    
+Record::Record(const Record &other) : code(other.code), patient(other.patient), bills(other.bills), totalBill(other.totalBill), entryDate(other.entryDate), depurateDate(other.depurateDate)
+{
 }
 
-Record& Record::operator=(const Record &other){
+Record &Record::operator=(const Record &other)
+{
 
-    if(this != &other){
+    if (this != &other)
+    {
 
         this->code = other.code;
         this->patient = other.patient;
@@ -20,46 +22,44 @@ Record& Record::operator=(const Record &other){
         this->totalBill = other.totalBill;
         this->entryDate = other.entryDate;
         this->depurateDate = other.depurateDate;
-
     }
     return *this;
-    
 }
 
-void Record::setCode(const int& v){
-    this-> code = v;
+void Record::setCode(const int &v)
+{
+    this->code = v;
 }
 
-
-
-void Record::setPatient(const Patient& v){
+void Record::setPatient(const Patient &v)
+{
     this->patient = v;
 }
 
-void Record::setBills(const float& v)
+void Record::setBills(const float &v)
 {
     this->bills = v;
 }
 
-void Record::setTotalBill(const float& v)
+void Record::setTotalBill(const float &v)
 {
     this->totalBill = v;
 }
 
-void Record::setEntryDate(const Date & v)
+void Record::setEntryDate(const Date &v)
 {
     this->entryDate = v;
 }
 
-void Record::setDepurateDate(const Date & v)
+void Record::setDepurateDate(const Date &v)
 {
     this->depurateDate = v;
 }
 
-int Record::getCode() const{
+int Record::getCode() const
+{
     return this->code;
 }
-
 
 Patient Record::getPatient() const
 {
@@ -73,7 +73,7 @@ float Record::getBills() const
 
 float Record::getTotalBill() const
 {
-    return this-> totalBill;
+    return this->totalBill;
 }
 
 Date Record::getEntryDate() const
@@ -96,46 +96,40 @@ std::string Record::toString() const
            "Fecha de Salida: " + depurateDate.toString() + "\n";
 }
 
-
-bool Record::operator==(const Record&other) const
+bool Record::operator==(const Record &other) const
 {
     return this->code == other.code;
 }
 
-bool Record::operator<(const Record&other) const
+bool Record::operator<(const Record &other) const
 {
     return this->code < other.code;
 }
 
-
-
-std::istream& operator>>(std::istream& is, Record& r) {
+std::istream &operator>>(std::istream &is, Record &r)
+{
     std::string tmp;
 
     getline(is, tmp, '*');
-    if(tmp.empty()) return is;
-    r.code = stoi(tmp);
-
-    is >> r.patient;        
-
+    r.code = stoi(tmp); // 1
+    is >> r.patient;    // consume: nss*name*bloodType*
     getline(is, tmp, '*');
-    if(tmp.empty()) return is;
     r.bills = stof(tmp);
-
     getline(is, tmp, '*');
-    if(tmp.empty()) return is;
     r.totalBill = stof(tmp);
-
-    is >> r.entryDate;     
-    is >> r.depurateDate;
+    is >> r.entryDate;    // consume: dia*mes*anio*
+    is >> r.depurateDate; // consume: dia*mes*anio  (sin * final)
 
     return is;
 }
 
-std::ostream& operator<<(std::ostream& os, const Record r){
-
-    os << r.code << '*' << r.patient << '*' << r.bills << '*' << r.totalBill << '*' << r.entryDate << '*' << r.depurateDate;
-    
+std::ostream &operator<<(std::ostream &os, const Record r)
+{
+    os << r.code << '*'
+       << r.patient << '*' // nss*name*bloodType*
+       << r.bills << '*'
+       << r.totalBill << '*'
+       << r.entryDate << '*' // dia*mes*anio*
+       << r.depurateDate;    // dia*mes*anio  (sin * al final, el # lo pone Container)
     return os;
 }
-

@@ -61,21 +61,22 @@ int Date::getAnio() const
     return this->anio;
 }
 
-std::ostream &operator<<(std::ostream &os, const Date &n)
+std::ostream &operator<<(std::ostream &os, const Date &d)
 {
 
-    os << n.dia << '*' << n.mes << '*' << n.anio;
-
+    os << d.dia << '*' << d.mes << '*' << d.anio;
+    // sin '*' al final — Record o el contexto pone el separador
     return os;
 }
 
-std::istream& operator>>(std::istream& is, Date& d) {
+std::istream &operator>>(std::istream &is, Date &d)
+{
     std::string tmp;
     getline(is, tmp, '*');
     d.dia = stoi(tmp);
     getline(is, tmp, '*');
     d.mes = stoi(tmp);
     getline(is, tmp, '*');
-    d.anio = stoi(tmp);
+    d.anio = stoi(tmp); // espera '*' después de anio
     return is;
 }

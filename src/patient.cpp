@@ -71,7 +71,7 @@ ostream &operator<<(ostream &os, const Patient &n)
 
 istream &operator>>(istream &is, Patient &n)
 {
-   
+   std::string temp;
 
     getline(is, n.nss, '*');
 

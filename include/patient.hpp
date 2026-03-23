@@ -21,13 +21,11 @@ public:
     void setName(const std::string &);
     void setBloodType(const std::string &);
 
-
     std::string toString() const;
 
     std::string getNss() const;
     std::string getName() const;
     std::string getBloodType() const;
-
 
     friend std::ostream &operator<<(std::ostream &, const Patient &);
     friend std::istream &operator>>(std::istream &, Patient &);

@@ -3,18 +3,19 @@
 
 #include <vector>
 #include <string>
+#include <fstream>
+#include <sstream>
 #include "patient.hpp"
 #include "date.hpp"
 #include "container.hpp"
 #include "record.hpp"
 
+typedef Container<Record> Book;
 
 class UI
 {
 private:
-
-    
-    Container<Record>* containerRef;
+    Book *bookRef;
 
     void mainUI();
 
@@ -37,7 +38,7 @@ private:
     void enterToContinue();
 
 public:
-     UI(Container<Record>&);
+    UI(Book &);
 };
 
 #endif // __UI_H__

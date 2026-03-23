@@ -7,7 +7,6 @@
 class Record
 {
 private:
-
     int code;
     Patient patient;
     float bills;
@@ -15,19 +14,17 @@ private:
     Date entryDate;
     Date depurateDate;
 
-
 public:
     Record();
-    Record(const Record&other);
+    Record(const Record &other);
     Record &operator=(const Record &other);
 
-    void setCode(const int&);
-    void setPatient(const Patient&);
-    void setBills(const float&);
-    void setTotalBill(const float&);
+    void setCode(const int &);
+    void setPatient(const Patient &);
+    void setBills(const float &);
+    void setTotalBill(const float &);
     void setEntryDate(const Date &);
     void setDepurateDate(const Date &);
-
 
     int getCode() const;
     Patient getPatient() const;
@@ -38,13 +35,11 @@ public:
 
     std::string toString() const;
 
-    bool operator==(const Record&) const;
-    bool operator<(const Record&) const;
+    bool operator==(const Record &) const;
+    bool operator<(const Record &) const;
 
-    
-    friend std::ostream &operator<<(std::ostream&, const Record);
-    friend std::istream &operator>>(std::istream&, Record&);
-
+    friend std::ostream &operator<<(std::ostream &, const Record);
+    friend std::istream &operator>>(std::istream &, Record &);
 };
 
 #endif // __RECORD_H__
